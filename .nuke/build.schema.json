@@ -73,7 +73,11 @@
             "enum": [
               "Clean",
               "Compile",
+              "DeployToLocal",
               "Restore",
+              "RunApiTests",
+              "StartServer",
+              "StopServer",
               "Test"
             ]
           }
@@ -90,7 +94,11 @@
             "enum": [
               "Clean",
               "Compile",
+              "DeployToLocal",
               "Restore",
+              "RunApiTests",
+              "StartServer",
+              "StopServer",
               "Test"
             ]
           }

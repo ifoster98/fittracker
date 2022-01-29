@@ -68,4 +68,28 @@ class Build : NukeBuild
                 .EnableNoRestore()
                 .EnableNoBuild());
         });
+
+    Target StartServer => _ => _
+        .DependsOn(Test)
+        .Executes(() => {
+            ProcessTasks.StartProcess("localstack", "start -d");
+        });
+
+    Target DeployToLocal => _ => _
+        .DependsOn(StartServer)
+        .Executes(() => {
+
+        });
+
+    Target RunApiTests => _ => _
+        .DependsOn(DeployToLocal)
+        .Executes(() => {
+
+        });
+
+    Target StopServer => _ => _
+        .DependsOn(RunApiTests) 
+        .Executes(() => {
+            ProcessTasks.StartProcess("localstack", "stop");
+        });
 }
