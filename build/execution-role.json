@@ -1,0 +1,13 @@
+{
+    "Effect": "Allow",
+    "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents",
+        "sts:AssumeRole"
+    ],
+    "Principal": {
+        "Service": "lambda.amazonaws.com"
+    },
+    "Resource": "*"
+}

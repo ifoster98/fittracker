@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using Nuke.Common;
 using Nuke.Common.CI;
 using Nuke.Common.Execution;
@@ -8,29 +6,27 @@ using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
-using Nuke.Common.Utilities.Collections;
-using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.FileSystemTasks;
-using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
 [CheckBuildProjectConfigurations]
 [ShutdownDotNetAfterServerBuild]
 class Build : NukeBuild
 {
-    /// Support plugins are available for:
-    ///   - JetBrains ReSharper        https://nuke.build/resharper
-    ///   - JetBrains Rider            https://nuke.build/rider
-    ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
-    ///   - Microsoft VSCode           https://nuke.build/vscode
-
     public static int Main () => Execute<Build>(x => x.Compile);
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
+    [Parameter("AWS Endpoint url to target the deployment to. Defaults to localhost:4566 for localstack development.")]
+    readonly static string AWSEndpoint = "http://localhost:4566";
+
+    [Parameter("AWS S3 bucket name to use. Defaults to 'fittracker'.")]
+    readonly static string WebAppBucketName = "fittracker-client";
+
     [Solution] readonly Solution Solution;
     [GitRepository] readonly GitRepository GitRepository;
+    
 
     AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
 
@@ -42,7 +38,6 @@ class Build : NukeBuild
         });
 
     Target Restore => _ => _
-        .DependsOn(Clean)
         .Executes(() =>
         {
             DotNetRestore(s => s
@@ -69,14 +64,32 @@ class Build : NukeBuild
                 .EnableNoBuild());
         });
 
-    Target StartServer => _ => _
+    Target CreateArtifacts => _ => _
         .DependsOn(Test)
+        .Executes(() => {
+            // Package up compile phase into format required for deploying to AWS Lambda
+            // Copy output of .net build to artifacts directory
+        });
+
+    Target StartServer => _ => _
+//        .DependsOn(CreateArtifacts)
         .Executes(() => {
             ProcessTasks.StartProcess("localstack", "start -d");
         });
 
-    Target DeployToLocal => _ => _
+    Target SetUpS3Infrastructure => _ => _
         .DependsOn(StartServer)
+        .Executes(() => {
+        });
+
+    Target SetUpInfrastructure => _ => _
+        .DependsOn(SetUpS3Infrastructure)
+        .Executes(() => {
+            // To do using CloudFormation 
+        });
+
+    Target DeployToLocal => _ => _
+        .DependsOn(SetUpInfrastructure)
         .Executes(() => {
 
         });

@@ -6,6 +6,10 @@
     "build": {
       "type": "object",
       "properties": {
+        "AWSEndpoint": {
+          "type": "string",
+          "description": "AWS Endpoint url to target the deployment to. Defaults to localhost:4566 for localstack development"
+        },
         "Configuration": {
           "type": "string",
           "description": "Configuration to build - Default is 'Debug' (local) or 'Release' (server)",
@@ -73,9 +77,12 @@
             "enum": [
               "Clean",
               "Compile",
+              "CreateArtifacts",
               "DeployToLocal",
               "Restore",
               "RunApiTests",
+              "SetUpInfrastructure",
+              "SetUpS3Infrastructure",
               "StartServer",
               "StopServer",
               "Test"
@@ -94,9 +101,12 @@
             "enum": [
               "Clean",
               "Compile",
+              "CreateArtifacts",
               "DeployToLocal",
               "Restore",
               "RunApiTests",
+              "SetUpInfrastructure",
+              "SetUpS3Infrastructure",
               "StartServer",
               "StopServer",
               "Test"
@@ -112,6 +122,10 @@
             "Quiet",
             "Verbose"
           ]
+        },
+        "WebAppBucketName": {
+          "type": "string",
+          "description": "AWS S3 bucket name to use. Defaults to 'fittracker'"
         }
       }
     }
