@@ -1,7 +1,7 @@
 using LanguageExt;
-using static LanguageExt.Prelude;
 
-namespace Ianf.Fittracker.Domain {
+namespace Ianf.Fittracker.Domain
+{
     public struct RepCount {
         private int repCount;
 

@@ -1,7 +1,5 @@
-using LanguageExt;
-using static LanguageExt.Prelude;
-
-namespace Ianf.Fittracker.Domain {
+namespace Ianf.Fittracker.Domain
+{
     public struct Weight {
         private double weight;
 

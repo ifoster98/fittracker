@@ -1,9 +1,9 @@
-using Ianf.Fittracker.Engine;
 using static Ianf.Fittracker.Engine.FiveByFive;
 using Ianf.Fittracker.Domain;
 using Xunit;
 
-namespace Ianf.Fittracker.Engine.Tests {
+namespace Ianf.Fittracker.Engine.Tests
+{
     public class FiveByFiveTests {
         [Fact]
         public void TestInc() {

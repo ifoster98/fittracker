@@ -1,8 +1,7 @@
 using Ianf.Fittracker.Domain;
-using System.Linq;
-using System.Collections.Generic;
 
-namespace Ianf.Fittracker.Engine {
+namespace Ianf.Fittracker.Engine
+{
     public static class FiveByFive {
         public static Weight Inc(ExerciseType et, Weight w) => 
             et == ExerciseType.Deadlift 
