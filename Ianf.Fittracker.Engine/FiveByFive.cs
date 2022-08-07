@@ -46,5 +46,13 @@ namespace Ianf.Fittracker.Engine
             exs.Any()
                 ? GetWeight(exs.Last())
                 : new Weight(0.0);
+
+        public static (Outcome, Outcome) GetLastTwoOutcomes(IEnumerable<Exercise> exs) =>
+            exs.Any()
+                ? (
+                    GetOutcome(TakeLast(exs, 1).First()), 
+                    GetOutcome(TakeLast(exs, 2).First())
+                  )
+                : (Outcome.Failure, Outcome.Failure);
     }
 }

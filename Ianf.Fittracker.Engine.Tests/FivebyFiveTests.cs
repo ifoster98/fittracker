@@ -102,54 +102,6 @@ namespace Ianf.Fittracker.Engine.Tests
         };
 
         [Fact]
-        public void TestTakeLast() {
-            // Assemble
-            var expected = benchPressHistory[1];
-
-            // Act
-            var result = TakeLast(benchPressHistory, 2);
-
-            // Assert
-            Assert.Equal(expected, result.First());
-        }
-
-        [Fact]
-        public void TestTakeLastEmptyList() {
-            // Assemble
-            var expected = new List<Exercise>();
-
-            // Act
-            var result = TakeLast(new List<Exercise>(), 2);
-
-            // Assert
-            Assert.Equal(expected, result);
-        }
-
-        [Fact]
-        public void TestTakeLastNegativeNumber() {
-            // Assemble
-            var expected = new List<Exercise>();
-
-            // Act
-            var result = TakeLast(benchPressHistory, -1);
-
-            // Assert
-            Assert.Equal(expected, result);
-        }
-
-        [Fact]
-        public void TestTakeLastZero() {
-            // Assemble
-            var expected = new List<Exercise>();
-
-            // Act
-            var result = TakeLast(benchPressHistory, 0);
-
-            // Assert
-            Assert.Equal(expected, result);
-        }
-
-        [Fact]
         public void TestGetWeight() {
             // Assemble
 
@@ -300,6 +252,44 @@ namespace Ianf.Fittracker.Engine.Tests
 
             // Act
             var result = GetLastWeight(toTest);
+
+            // Assert
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void TestGetLastTwoOutcomes() {
+            // Assemble
+            var expected = (Outcome.Success, Outcome.Success);
+
+            // Act
+            var result = GetLastTwoOutcomes(benchPressHistory);
+
+            // Assert
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void TestGetLastTwoOutcomesSingleExercise() {
+            // Assemble
+            var toTest = new List<Exercise> {benchPressHistory.First()};
+            var expected = (Outcome.Success, Outcome.Success);
+
+            // Act
+            var result = GetLastTwoOutcomes(toTest);
+
+            // Assert
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void TestGetLastTwoOutcomesEmptyList() {
+            // Assemble
+            var toTest = new List<Exercise>();
+            var expected = (Outcome.Failure, Outcome.Failure);
+
+            // Act
+            var result = GetLastTwoOutcomes(toTest);
 
             // Assert
             Assert.Equal(expected, result);
