@@ -35,16 +35,12 @@ namespace Ianf.Fittracker.Engine
                 ? GetOutcomeFromReps(ex.ExerciseSet)
                 : Outcome.Failure;
 
-        public static Weight CalculateNextWeight(ExerciseType et, Weight w, (Outcome, Outcome) history){
-            switch(history) {
-                case (Outcome, Outcome) t when t.Item1 == Outcome.Failure && t.Item2 == Outcome.Failure:
-                    return Dec(et, w);
-                case (Outcome, Outcome) t when t.Item2 == Outcome.Failure:
-                    return w;
-                default:
-                    return Inc(et, w);
-            }
-        }
+        public static Weight CalculateNextWeight(ExerciseType et, Weight w, (Outcome, Outcome) history) => history switch
+        {
+            (Outcome, Outcome) t when t.Item1 == Outcome.Failure && t.Item2 == Outcome.Failure => Dec(et, w),
+            (Outcome, Outcome) t when t.Item2 == Outcome.Failure => w,
+            _ => Inc(et, w)
+        };
 
         public static Weight GetLastWeight(IEnumerable<Exercise> exs) => 
             exs.Any()
