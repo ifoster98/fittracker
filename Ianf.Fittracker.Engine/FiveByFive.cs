@@ -15,6 +15,9 @@ namespace Ianf.Fittracker.Engine
 
         private static Weight BottomLimit(Weight w) => w.GetValue() < 0 ? new Weight(0) : w;
 
-        public static IEnumerable<Exercise> TakeLast(IEnumerable<Exercise> exs, int amount) => Enumerable.Reverse(Enumerable.Reverse(exs).Take(amount));
+        public static IEnumerable<Exercise> TakeLast(IEnumerable<Exercise> exs, int amount) => 
+            exs.Any() 
+                ? Enumerable.Reverse(Enumerable.Reverse(exs).Take(amount))
+                : exs;
     }
 }
