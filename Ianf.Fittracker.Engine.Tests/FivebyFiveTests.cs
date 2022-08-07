@@ -101,198 +101,254 @@ namespace Ianf.Fittracker.Engine.Tests
             }
         };
 
+        private List<Exercise> deadliftHistory = new List<Exercise> {
+            new Exercise() {
+                ExerciseType = ExerciseType.Deadlift,
+                ExerciseTime = DateTime.Now,
+                ExerciseSet = new List<Reps> {
+                    new Reps {
+                        Weight = new Weight(45.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(45.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(45.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(45.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(45.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    }
+                }
+            },
+            new Exercise() {
+                ExerciseType = ExerciseType.Deadlift,
+                ExerciseTime = DateTime.Now,
+                ExerciseSet = new List<Reps> {
+                    new Reps {
+                        Weight = new Weight(47.5),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(47.5),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(47.5),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(47.5),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(47.5),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    }
+                }
+            },
+            new Exercise() {
+                ExerciseType = ExerciseType.Deadlift,
+                ExerciseTime = DateTime.Now,
+                ExerciseSet = new List<Reps> {
+                    new Reps {
+                        Weight = new Weight(50.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(50.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(50.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(50.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(50.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    }
+                }
+            }
+        };
+
+        // test with only one exercise in list
+
+        // test with no exercises in list
+
         [Fact]
-        public void TestGetWeight() {
+        public void TestGetNextWeightBenchPressFailureFailure() {
             // Assemble
+            var penultimateSet = benchPressHistory[1].ExerciseSet.Last() with {Outcome = Outcome.Failure};
+            benchPressHistory[1].ExerciseSet.RemoveAt(4);
+            benchPressHistory[1].ExerciseSet.Add(penultimateSet);
+
+            var finalSet = benchPressHistory[2].ExerciseSet.Last() with {Outcome = Outcome.Failure};
+            benchPressHistory[2].ExerciseSet.RemoveAt(4);
+            benchPressHistory[2].ExerciseSet.Add(finalSet);
+
+            var exerciseList = new Dictionary<ExerciseType, List<Exercise>> {
+                {
+                    ExerciseType.BenchPress,
+                    benchPressHistory
+                }
+            };
 
             // Act
-            var result = GetWeight(benchPressHistory.First());
-
-            // Assert
-            Assert.Equal(new Weight(45.0), result);
-        }
-
-        [Fact]
-        public void TestGetWeightNoSets() {
-            // Assemble
-            var newExercise = benchPressHistory.First() with { ExerciseSet = new List<Reps>() };
-
-            // Act
-            var result = GetWeight(newExercise);
-
-            // Assert
-            Assert.Equal(new Weight(0), result);
-        }
-
-        [Fact]
-        public void TestGetOutcome() {
-            // Assemble
-            var expected = Outcome.Success;
-
-            // Act
-            var result = GetOutcome(benchPressHistory.First());
-
-            // Assert
-            Assert.Equal(expected, result);
-        }
-
-        [Fact]
-        public void TestGetOutcomeFailure() {
-            // Assemble
-            var toTest = benchPressHistory.First() with { ExerciseSet = new List<Reps>{new Reps{ Weight = new Weight(50.0), Outcome = Outcome.Failure, RepCount = new RepCount(5)}}};
-            var expected = Outcome.Failure;
-
-            // Act
-            var result = GetOutcome(toTest);
-
-            // Assert
-            Assert.Equal(expected, result);
-        }
-
-        [Fact]
-        public void TestCalculateNextWeightBenchPressFailureFailure() {
-            // Assemble
-            var w = new Weight(50.0);
-
-            // Act
-            var result = CalculateNextWeight(ExerciseType.BenchPress, w, (Outcome.Failure, Outcome.Failure));
+            var result = GetNextWeight(ExerciseType.BenchPress, exerciseList);
 
             // Assert
             Assert.Equal(new Weight(47.5), result);
+
+            penultimateSet = benchPressHistory[1].ExerciseSet.Last() with {Outcome = Outcome.Success};
+            benchPressHistory[1].ExerciseSet.RemoveAt(4);
+            benchPressHistory[1].ExerciseSet.Add(penultimateSet);
+
+            finalSet = benchPressHistory[2].ExerciseSet.Last() with {Outcome = Outcome.Success};
+            benchPressHistory[2].ExerciseSet.RemoveAt(4);
+            benchPressHistory[2].ExerciseSet.Add(finalSet);
         }
 
         [Fact]
-        public void TestCalculateNextWeightBenchPressSuccessFailure() {
+        public void TestGetNextWeightBenchPressSuccessFailure() {
             // Assemble
-            var w = new Weight(50.0);
+            var finalSet = benchPressHistory[2].ExerciseSet.Last() with {Outcome = Outcome.Failure};
+            benchPressHistory[2].ExerciseSet.RemoveAt(4);
+            benchPressHistory[2].ExerciseSet.Add(finalSet);
+
+            var exerciseList = new Dictionary<ExerciseType, List<Exercise>> {
+                {
+                    ExerciseType.BenchPress,
+                    benchPressHistory
+                }
+            };
 
             // Act
-            var result = CalculateNextWeight(ExerciseType.BenchPress, w, (Outcome.Success, Outcome.Failure));
+            var result = GetNextWeight(ExerciseType.BenchPress, exerciseList);
 
             // Assert
             Assert.Equal(new Weight(50.0), result);
+
+            finalSet = benchPressHistory[2].ExerciseSet.Last() with {Outcome = Outcome.Success};
+            benchPressHistory[2].ExerciseSet.RemoveAt(4);
+            benchPressHistory[2].ExerciseSet.Add(finalSet);
         }
 
         [Fact]
-        public void TestCalculateNextWeightBenchPressSuccessSuccess() {
+        public void TestGetNextWeightBenchPressSuccessSuccess() {
             // Assemble
-            var w = new Weight(50.0);
+            var exerciseList = new Dictionary<ExerciseType, List<Exercise>> {
+                {
+                    ExerciseType.BenchPress,
+                    benchPressHistory
+                }
+            };
 
             // Act
-            var result = CalculateNextWeight(ExerciseType.BenchPress, w, (Outcome.Success, Outcome.Success));
+            var result = GetNextWeight(ExerciseType.BenchPress, exerciseList);
 
             // Assert
             Assert.Equal(new Weight(52.5), result);
         }
 
         [Fact]
-        public void TestCalculateNextWeightDeadliftFailureFailure() {
+        public void TestGetNextWeightDeadliftFailureFailure() {
             // Assemble
-            var w = new Weight(50.0);
+            var penultimateSet = deadliftHistory[1].ExerciseSet.Last() with {Outcome = Outcome.Failure};
+            deadliftHistory[1].ExerciseSet.RemoveAt(4);
+            deadliftHistory[1].ExerciseSet.Add(penultimateSet);
+
+            var finalSet = deadliftHistory[2].ExerciseSet.Last() with {Outcome = Outcome.Failure};
+            deadliftHistory[2].ExerciseSet.RemoveAt(4);
+            deadliftHistory[2].ExerciseSet.Add(finalSet);
+
+            var exerciseList = new Dictionary<ExerciseType, List<Exercise>> {
+                {
+                    ExerciseType.Deadlift,
+                    deadliftHistory
+                }
+            };
 
             // Act
-            var result = CalculateNextWeight(ExerciseType.Deadlift, w, (Outcome.Failure, Outcome.Failure));
+            var result = GetNextWeight(ExerciseType.Deadlift, exerciseList);
 
             // Assert
             Assert.Equal(new Weight(45.0), result);
+
+            penultimateSet = deadliftHistory[1].ExerciseSet.Last() with {Outcome = Outcome.Success};
+            deadliftHistory[1].ExerciseSet.RemoveAt(4);
+            deadliftHistory[1].ExerciseSet.Add(penultimateSet);
+
+            finalSet = deadliftHistory[2].ExerciseSet.Last() with {Outcome = Outcome.Success};
+            deadliftHistory[2].ExerciseSet.RemoveAt(4);
+            deadliftHistory[2].ExerciseSet.Add(finalSet);
         }
 
         [Fact]
-        public void TestCalculateNextWeightDeadliftSuccessFailure() {
+        public void TestGetNextWeightDeadliftSuccessFailure() {
             // Assemble
-            var w = new Weight(50.0);
+            var finalSet = deadliftHistory[2].ExerciseSet.Last() with {Outcome = Outcome.Failure};
+            deadliftHistory[2].ExerciseSet.RemoveAt(4);
+            deadliftHistory[2].ExerciseSet.Add(finalSet);
+
+            var exerciseList = new Dictionary<ExerciseType, List<Exercise>> {
+                {
+                    ExerciseType.Deadlift,
+                    deadliftHistory
+                }
+            };
 
             // Act
-            var result = CalculateNextWeight(ExerciseType.Deadlift, w, (Outcome.Success, Outcome.Failure));
+            var result = GetNextWeight(ExerciseType.Deadlift, exerciseList);
 
             // Assert
             Assert.Equal(new Weight(50.0), result);
+
+            finalSet = deadliftHistory[2].ExerciseSet.Last() with {Outcome = Outcome.Success};
+            deadliftHistory[2].ExerciseSet.RemoveAt(4);
+            deadliftHistory[2].ExerciseSet.Add(finalSet);
         }
 
         [Fact]
-        public void TestCalculateNextWeightDeadliftSuccessSuccess() {
+        public void TestGetNextWeightDeadliftSuccessSuccess() {
             // Assemble
-            var w = new Weight(50.0);
+            var exerciseList = new Dictionary<ExerciseType, List<Exercise>> {
+                {
+                    ExerciseType.Deadlift,
+                    deadliftHistory
+                }
+            };
 
             // Act
-            var result = CalculateNextWeight(ExerciseType.Deadlift, w, (Outcome.Success, Outcome.Success));
+            var result = GetNextWeight(ExerciseType.Deadlift, exerciseList);
 
             // Assert
             Assert.Equal(new Weight(55.0), result);
-        }
-
-        [Fact]
-        public void TestCalculateNextWeightDeadliftAtZeroFailureFailure() {
-            // Assemble
-            var w = new Weight(0.0);
-
-            // Act
-            var result = CalculateNextWeight(ExerciseType.Deadlift, w, (Outcome.Failure, Outcome.Failure));
-
-            // Assert
-            Assert.Equal(new Weight(0.0), result);
-        }
-
-        [Fact]
-        public void TestGetLastWeight() {
-            // Assemble
-
-            // Act
-            var result = GetLastWeight(benchPressHistory);
-
-            // Assert
-            Assert.Equal(new Weight(50.0), GetWeight(benchPressHistory.Last()));
-        }
-
-        [Fact]
-        public void TestGetLastWeightEmptyList() {
-            // Assemble
-            var toTest = new List<Exercise>();
-            var expected = new Weight(0);
-
-            // Act
-            var result = GetLastWeight(toTest);
-
-            // Assert
-            Assert.Equal(expected, result);
-        }
-
-        [Fact]
-        public void TestGetLastTwoOutcomes() {
-            // Assemble
-            var expected = (Outcome.Success, Outcome.Success);
-
-            // Act
-            var result = GetLastTwoOutcomes(benchPressHistory);
-
-            // Assert
-            Assert.Equal(expected, result);
-        }
-
-        [Fact]
-        public void TestGetLastTwoOutcomesSingleExercise() {
-            // Assemble
-            var toTest = new List<Exercise> {benchPressHistory.First()};
-            var expected = (Outcome.Success, Outcome.Success);
-
-            // Act
-            var result = GetLastTwoOutcomes(toTest);
-
-            // Assert
-            Assert.Equal(expected, result);
-        }
-
-        [Fact]
-        public void TestGetLastTwoOutcomesEmptyList() {
-            // Assemble
-            var toTest = new List<Exercise>();
-            var expected = (Outcome.Failure, Outcome.Failure);
-
-            // Act
-            var result = GetLastTwoOutcomes(toTest);
-
-            // Assert
-            Assert.Equal(expected, result);
         }
     }
 }
