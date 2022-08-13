@@ -4,7 +4,7 @@ using System.Threading;
 // ARGUMENTS
 ///////////////////////////////////////////////////////////////////////////////
 
-var target = Argument("target", "Build");
+var target = Argument("target", "Test");
 var configuration = Argument("configuration", "Release");
 var webSolution = Argument("webSolution", "./fittracker.sln");
 var artifactDirectory = Argument("artifactDirectory", "./artifacts/");
@@ -26,6 +26,16 @@ Task("Build")
    {
       Configuration = configuration,
    });
+});
+
+Task("Test")
+.IsDependentOn("Build")
+.Does(() => {
+    DotNetTest(webSolution, new DotNetCoreTestSettings
+    {
+       Configuration = configuration,
+       NoBuild = true
+    });
 });
 
 RunTarget(target);
