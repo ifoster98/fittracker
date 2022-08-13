@@ -4,6 +4,11 @@ using static LanguageExt.Prelude;
 namespace Ianf.Fittracker.Engine
 {
     public static class FiveByFive {
+        private static Dictionary<WorkoutSubType, List<ExerciseType>> WorkoutSubTypes = new Dictionary<WorkoutSubType, List<ExerciseType>>{
+            { WorkoutSubType.WorkoutA, new List<ExerciseType> {ExerciseType.Squat, ExerciseType.BenchPress, ExerciseType.BentOverRows} },
+            { WorkoutSubType.WorkoutB, new List<ExerciseType> {ExerciseType.Squat, ExerciseType.OverheadPress, ExerciseType.Deadlift} }
+        };
+
         private static Weight Inc(ExerciseType et, Weight w) => 
             et == ExerciseType.Deadlift 
                 ? new Weight(w.GetValue() + 5) 
@@ -74,11 +79,21 @@ namespace Ianf.Fittracker.Engine
             return new Exercise{ExerciseType = et, ExerciseTime = None, ExerciseSet = reps};
         }
 
-        public static List<Exercise> GenerateExercisesForNextWorkout(WorkoutSubType wst, 
+        private static List<Exercise> GenerateExercisesForNextWorkout(WorkoutSubType wst, 
             Dictionary<ExerciseType, List<Exercise>> exerciseList, 
             List<ExerciseType> exerciseTypes) =>
             exerciseTypes != null && exerciseTypes.Any()
                 ? exerciseTypes.Select(et => GetNextExercise(et, exerciseList)).ToList()
                 : new List<Exercise>();
+
+        private static WorkoutSubType GetNextWorkoutSubType(WorkoutSubType w) => w == WorkoutSubType.WorkoutA ? WorkoutSubType.WorkoutB : WorkoutSubType.WorkoutA;
+
+        public static Workout GenerateNextWorkout(WorkoutSubType wst, Dictionary<ExerciseType, List<Exercise>> exerciseList) =>
+            new Workout {
+                WorkoutType = WorkoutType.FiveByFive,
+                WorkoutSubType = GetNextWorkoutSubType(wst),
+                WorkoutTime = None,
+                Exercises = GenerateExercisesForNextWorkout(GetNextWorkoutSubType(wst), exerciseList, WorkoutSubTypes[wst])
+            };
     }
 }
