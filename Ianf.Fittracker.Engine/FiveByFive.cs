@@ -61,5 +61,8 @@ namespace Ianf.Fittracker.Engine
                 GetLastWeight(exerciseList[et]), 
                 GetLastTwoOutcomes(exerciseList[et])
             );
+
+        public static List<Reps> GenerateRepsForNextWorkout(Weight w) => 
+            Enumerable.Repeat(new Reps{Weight = w, RepCount = new RepCount(5), Outcome = Outcome.Failure}, 5).ToList();
     }
 }

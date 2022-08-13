@@ -198,8 +198,42 @@ namespace Ianf.Fittracker.Engine.Tests
         };
 
         // test with only one exercise in list
+        private List<Exercise> deadliftHistorySingleExercise = new List<Exercise> {
+            new Exercise() {
+                ExerciseType = ExerciseType.Deadlift,
+                ExerciseTime = DateTime.Now,
+                ExerciseSet = new List<Reps> {
+                    new Reps {
+                        Weight = new Weight(45.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(45.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(45.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(45.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(45.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    }
+                }
+            },
+        };
 
         // test with no exercises in list
+        private List<Exercise> noExercisesList = new List<Exercise>();
 
         [Fact]
         public void TestGetNextWeightBenchPressFailureFailure() {
@@ -349,6 +383,52 @@ namespace Ianf.Fittracker.Engine.Tests
 
             // Assert
             Assert.Equal(new Weight(55.0), result);
+        }
+        
+        [Fact]
+        public void TestGetNextWeightDeadliftOneExercise() {
+            // Assemble
+            var exerciseList = new Dictionary<ExerciseType, List<Exercise>> {
+                {
+                    ExerciseType.Deadlift,
+                    deadliftHistorySingleExercise
+                }
+            };
+
+            // Act
+            var result = GetNextWeight(ExerciseType.Deadlift, exerciseList);
+
+            // Assert
+            Assert.Equal(new Weight(50.0), result);
+        }
+
+        [Fact]
+        public void TestGetNextWeightDeadliftNoExercises() {
+            // Assemble
+            var exerciseList = new Dictionary<ExerciseType, List<Exercise>> {
+                {
+                    ExerciseType.Deadlift,
+                    noExercisesList
+                }
+            };
+
+            // Act
+            var result = GetNextWeight(ExerciseType.Deadlift, exerciseList);
+
+            // Assert
+            Assert.Equal(new Weight(0.0), result);
+        }
+
+        [Fact]
+        public void TestGenerateRepsForNextWorkout() {
+            // Assemble
+            var w = new Weight(55.0);
+
+            // Act
+            var result = GenerateRepsForNextWorkout(w);
+
+            // Assert
+            Assert.Equal(5, result.Length());
         }
     }
 }
