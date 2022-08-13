@@ -197,7 +197,6 @@ namespace Ianf.Fittracker.Engine.Tests
             }
         };
 
-        // test with only one exercise in list
         private List<Exercise> deadliftHistorySingleExercise = new List<Exercise> {
             new Exercise() {
                 ExerciseType = ExerciseType.Deadlift,
@@ -232,11 +231,10 @@ namespace Ianf.Fittracker.Engine.Tests
             },
         };
 
-        // test with no exercises in list
         private List<Exercise> noExercisesList = new List<Exercise>();
 
         [Fact]
-        public void TestGetNextWeightBenchPressFailureFailure() {
+        public void TestGenerateExercisesForNextWorkoutBenchPressFailureFailure() {
             // Assemble
             var penultimateSet = benchPressHistory[1].ExerciseSet.Last() with {Outcome = Outcome.Failure};
             benchPressHistory[1].ExerciseSet.RemoveAt(4);
@@ -254,10 +252,10 @@ namespace Ianf.Fittracker.Engine.Tests
             };
 
             // Act
-            var result = GetNextWeight(ExerciseType.BenchPress, exerciseList);
+            var result = GenerateExercisesForNextWorkout(WorkoutSubType.WorkoutA, exerciseList, new List<ExerciseType>(){ ExerciseType.BenchPress});
 
             // Assert
-            Assert.Equal(new Weight(47.5), result);
+            Assert.Equal(new Weight(47.5), result.First().ExerciseSet.First().Weight);
 
             penultimateSet = benchPressHistory[1].ExerciseSet.Last() with {Outcome = Outcome.Success};
             benchPressHistory[1].ExerciseSet.RemoveAt(4);
@@ -269,7 +267,7 @@ namespace Ianf.Fittracker.Engine.Tests
         }
 
         [Fact]
-        public void TestGetNextWeightBenchPressSuccessFailure() {
+        public void TestGenerateExercisesForNextWorkoutBenchPressSuccessFailure() {
             // Assemble
             var finalSet = benchPressHistory[2].ExerciseSet.Last() with {Outcome = Outcome.Failure};
             benchPressHistory[2].ExerciseSet.RemoveAt(4);
@@ -283,10 +281,10 @@ namespace Ianf.Fittracker.Engine.Tests
             };
 
             // Act
-            var result = GetNextWeight(ExerciseType.BenchPress, exerciseList);
+            var result = GenerateExercisesForNextWorkout(WorkoutSubType.WorkoutA, exerciseList, new List<ExerciseType>(){ ExerciseType.BenchPress});
 
             // Assert
-            Assert.Equal(new Weight(50.0), result);
+            Assert.Equal(new Weight(50.0), result.First().ExerciseSet.First().Weight);
 
             finalSet = benchPressHistory[2].ExerciseSet.Last() with {Outcome = Outcome.Success};
             benchPressHistory[2].ExerciseSet.RemoveAt(4);
@@ -294,7 +292,7 @@ namespace Ianf.Fittracker.Engine.Tests
         }
 
         [Fact]
-        public void TestGetNextWeightBenchPressSuccessSuccess() {
+        public void TestGenerateExercisesForNextWorkoutBenchPressSuccessSuccess() {
             // Assemble
             var exerciseList = new Dictionary<ExerciseType, List<Exercise>> {
                 {
@@ -304,14 +302,14 @@ namespace Ianf.Fittracker.Engine.Tests
             };
 
             // Act
-            var result = GetNextWeight(ExerciseType.BenchPress, exerciseList);
+            var result = GenerateExercisesForNextWorkout(WorkoutSubType.WorkoutA, exerciseList, new List<ExerciseType>(){ ExerciseType.BenchPress});
 
             // Assert
-            Assert.Equal(new Weight(52.5), result);
+            Assert.Equal(new Weight(52.5), result.First().ExerciseSet.First().Weight);
         }
 
         [Fact]
-        public void TestGetNextWeightDeadliftFailureFailure() {
+        public void TestGenerateExercisesForNextWorkoutDeadliftFailureFailure() {
             // Assemble
             var penultimateSet = deadliftHistory[1].ExerciseSet.Last() with {Outcome = Outcome.Failure};
             deadliftHistory[1].ExerciseSet.RemoveAt(4);
@@ -329,10 +327,10 @@ namespace Ianf.Fittracker.Engine.Tests
             };
 
             // Act
-            var result = GetNextWeight(ExerciseType.Deadlift, exerciseList);
+            var result = GenerateExercisesForNextWorkout(WorkoutSubType.WorkoutA, exerciseList, new List<ExerciseType>(){ ExerciseType.Deadlift});
 
             // Assert
-            Assert.Equal(new Weight(45.0), result);
+            Assert.Equal(new Weight(45.0), result.First().ExerciseSet.First().Weight);
 
             penultimateSet = deadliftHistory[1].ExerciseSet.Last() with {Outcome = Outcome.Success};
             deadliftHistory[1].ExerciseSet.RemoveAt(4);
@@ -344,7 +342,7 @@ namespace Ianf.Fittracker.Engine.Tests
         }
 
         [Fact]
-        public void TestGetNextWeightDeadliftSuccessFailure() {
+        public void TestGenerateExercisesForNextWorkoutDeadliftSuccessFailure() {
             // Assemble
             var finalSet = deadliftHistory[2].ExerciseSet.Last() with {Outcome = Outcome.Failure};
             deadliftHistory[2].ExerciseSet.RemoveAt(4);
@@ -358,10 +356,10 @@ namespace Ianf.Fittracker.Engine.Tests
             };
 
             // Act
-            var result = GetNextWeight(ExerciseType.Deadlift, exerciseList);
+            var result = GenerateExercisesForNextWorkout(WorkoutSubType.WorkoutA, exerciseList, new List<ExerciseType>(){ ExerciseType.Deadlift});
 
             // Assert
-            Assert.Equal(new Weight(50.0), result);
+            Assert.Equal(new Weight(50.0), result.First().ExerciseSet.First().Weight);
 
             finalSet = deadliftHistory[2].ExerciseSet.Last() with {Outcome = Outcome.Success};
             deadliftHistory[2].ExerciseSet.RemoveAt(4);
@@ -369,7 +367,7 @@ namespace Ianf.Fittracker.Engine.Tests
         }
 
         [Fact]
-        public void TestGetNextWeightDeadliftSuccessSuccess() {
+        public void TestGenerateExercisesForNextWorkoutDeadliftSuccessSuccess() {
             // Assemble
             var exerciseList = new Dictionary<ExerciseType, List<Exercise>> {
                 {
@@ -379,14 +377,14 @@ namespace Ianf.Fittracker.Engine.Tests
             };
 
             // Act
-            var result = GetNextWeight(ExerciseType.Deadlift, exerciseList);
+            var result = GenerateExercisesForNextWorkout(WorkoutSubType.WorkoutA, exerciseList, new List<ExerciseType>(){ ExerciseType.Deadlift});
 
             // Assert
-            Assert.Equal(new Weight(55.0), result);
+            Assert.Equal(new Weight(55.0), result.First().ExerciseSet.First().Weight);
         }
         
         [Fact]
-        public void TestGetNextWeightDeadliftOneExercise() {
+        public void TestGenerateExercisesForNextWorkoutDeadliftOneExercise() {
             // Assemble
             var exerciseList = new Dictionary<ExerciseType, List<Exercise>> {
                 {
@@ -396,14 +394,14 @@ namespace Ianf.Fittracker.Engine.Tests
             };
 
             // Act
-            var result = GetNextWeight(ExerciseType.Deadlift, exerciseList);
+            var result = GenerateExercisesForNextWorkout(WorkoutSubType.WorkoutA, exerciseList, new List<ExerciseType>(){ ExerciseType.Deadlift});
 
             // Assert
-            Assert.Equal(new Weight(50.0), result);
+            Assert.Equal(new Weight(50.0), result.First().ExerciseSet.First().Weight);
         }
 
         [Fact]
-        public void TestGetNextWeightDeadliftNoExercises() {
+        public void TestGenerateExercisesForNextWorkoutDeadliftNoExercises() {
             // Assemble
             var exerciseList = new Dictionary<ExerciseType, List<Exercise>> {
                 {
@@ -413,22 +411,21 @@ namespace Ianf.Fittracker.Engine.Tests
             };
 
             // Act
-            var result = GetNextWeight(ExerciseType.Deadlift, exerciseList);
+            var result = GenerateExercisesForNextWorkout(WorkoutSubType.WorkoutA, exerciseList, new List<ExerciseType>(){ ExerciseType.Deadlift});
 
             // Assert
-            Assert.Equal(new Weight(0.0), result);
+            Assert.Equal(new Weight(0.0), result.First().ExerciseSet.First().Weight);
         }
 
         [Fact]
-        public void TestGenerateRepsForNextWorkout() {
+        public void TestGenerateExercisesForNextWorkout() {
             // Assemble
-            var w = new Weight(55.0);
 
             // Act
-            var result = GenerateRepsForNextWorkout(w);
+            var result = GenerateExercisesForNextWorkout(WorkoutSubType.WorkoutA, new Dictionary<ExerciseType, List<Exercise>>(), new List<ExerciseType>());
 
             // Assert
-            Assert.Equal(5, result.Length());
+            Assert.Empty(result);
         }
     }
 }

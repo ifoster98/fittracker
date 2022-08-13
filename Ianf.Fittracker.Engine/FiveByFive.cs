@@ -1,4 +1,5 @@
 using Ianf.Fittracker.Domain;
+using static LanguageExt.Prelude;
 
 namespace Ianf.Fittracker.Engine
 {
@@ -55,14 +56,29 @@ namespace Ianf.Fittracker.Engine
                   )
                 : (Outcome.Failure, Outcome.Failure);
 
-        public static Weight GetNextWeight(ExerciseType et, Dictionary<ExerciseType, List<Exercise>> exerciseList) =>
+        private static Weight GetNextWeight(ExerciseType et, Dictionary<ExerciseType, List<Exercise>> exerciseList) =>
             CalculateNextWeight(
                 et, 
                 GetLastWeight(exerciseList[et]), 
                 GetLastTwoOutcomes(exerciseList[et])
             );
 
-        public static List<Reps> GenerateRepsForNextWorkout(Weight w) => 
-            Enumerable.Repeat(new Reps{Weight = w, RepCount = new RepCount(5), Outcome = Outcome.Failure}, 5).ToList();
+        private static List<Reps> GenerateRepsForNextWorkout(Weight w) => 
+            Enumerable
+                .Repeat(new Reps{Weight = w, RepCount = new RepCount(5), Outcome = Outcome.Failure}, 5)
+                    .ToList();
+
+        private static Exercise GetNextExercise(ExerciseType et, Dictionary<ExerciseType, List<Exercise>> exerciseList) {
+            var nextWeight = GetNextWeight(et, exerciseList);
+            var reps = GenerateRepsForNextWorkout(nextWeight);
+            return new Exercise{ExerciseType = et, ExerciseTime = None, ExerciseSet = reps};
+        }
+
+        public static List<Exercise> GenerateExercisesForNextWorkout(WorkoutSubType wst, 
+            Dictionary<ExerciseType, List<Exercise>> exerciseList, 
+            List<ExerciseType> exerciseTypes) =>
+            exerciseTypes != null && exerciseTypes.Any()
+                ? exerciseTypes.Select(et => GetNextExercise(et, exerciseList)).ToList()
+                : new List<Exercise>();
     }
 }
