@@ -532,12 +532,14 @@ namespace Ianf.Fittracker.Engine.Tests
             benchPressHistory[2].ExerciseSet.RemoveAt(4);
             benchPressHistory[2].ExerciseSet.Add(finalSet);
 
-            var database = new Dictionary<ExerciseType, List<Exercise>> {
+            var database = new Database {
+                ExerciseLookup = new Dictionary<ExerciseType, List<Exercise>> {
                 {ExerciseType.BenchPress, benchPressHistory},
                 {ExerciseType.Deadlift, deadliftHistory},
                 {ExerciseType.OverheadPress, overheadPressHistory},
                 {ExerciseType.BentOverRows, bentoverrowHistory},
                 {ExerciseType.Squat, squatHistory}
+                }
             };
 
             // Act
@@ -562,12 +564,14 @@ namespace Ianf.Fittracker.Engine.Tests
             benchPressHistory[2].ExerciseSet.RemoveAt(4);
             benchPressHistory[2].ExerciseSet.Add(finalSet);
 
-            var database = new Dictionary<ExerciseType, List<Exercise>> {
+            var database = new Database {
+                ExerciseLookup = new Dictionary<ExerciseType, List<Exercise>> {
                 {ExerciseType.BenchPress, benchPressHistory},
                 {ExerciseType.Deadlift, deadliftHistory},
                 {ExerciseType.OverheadPress, overheadPressHistory},
                 {ExerciseType.BentOverRows, bentoverrowHistory},
                 {ExerciseType.Squat, squatHistory}
+                } 
             };
 
             // Act
@@ -584,12 +588,14 @@ namespace Ianf.Fittracker.Engine.Tests
         [Fact]
         public void TestGenerateNextWorkoutBenchPressSuccessSuccess() {
             // Assemble
-            var database = new Dictionary<ExerciseType, List<Exercise>> {
+            var database = new Database {
+                ExerciseLookup = new Dictionary<ExerciseType, List<Exercise>> {
                 {ExerciseType.BenchPress, benchPressHistory},
                 {ExerciseType.Deadlift, deadliftHistory},
                 {ExerciseType.OverheadPress, overheadPressHistory},
                 {ExerciseType.BentOverRows, bentoverrowHistory},
                 {ExerciseType.Squat, squatHistory}
+                }
             };
 
             // Act
@@ -610,12 +616,14 @@ namespace Ianf.Fittracker.Engine.Tests
             deadliftHistory[2].ExerciseSet.RemoveAt(4);
             deadliftHistory[2].ExerciseSet.Add(finalSet);
 
-            var database = new Dictionary<ExerciseType, List<Exercise>> {
+            var database = new Database {
+                ExerciseLookup = new Dictionary<ExerciseType, List<Exercise>> {
                 {ExerciseType.BenchPress, benchPressHistory},
                 {ExerciseType.Deadlift, deadliftHistory},
                 {ExerciseType.OverheadPress, overheadPressHistory},
                 {ExerciseType.BentOverRows, bentoverrowHistory},
                 {ExerciseType.Squat, squatHistory}
+                }
             };
 
             // Act
@@ -640,12 +648,14 @@ namespace Ianf.Fittracker.Engine.Tests
             deadliftHistory[2].ExerciseSet.RemoveAt(4);
             deadliftHistory[2].ExerciseSet.Add(finalSet);
 
-            var database = new Dictionary<ExerciseType, List<Exercise>> {
+            var database = new Database {
+                ExerciseLookup = new Dictionary<ExerciseType, List<Exercise>> {
                 {ExerciseType.BenchPress, benchPressHistory},
                 {ExerciseType.Deadlift, deadliftHistory},
                 {ExerciseType.OverheadPress, overheadPressHistory},
                 {ExerciseType.BentOverRows, bentoverrowHistory},
                 {ExerciseType.Squat, squatHistory}
+                }
             };
 
             // Act
@@ -662,12 +672,14 @@ namespace Ianf.Fittracker.Engine.Tests
         [Fact]
         public void TestGenerateNextWorkoutDeadliftSuccessSuccess() {
             // Assemble
-            var database = new Dictionary<ExerciseType, List<Exercise>> {
+            var database = new Database {
+                ExerciseLookup = new Dictionary<ExerciseType, List<Exercise>> {
                 {ExerciseType.BenchPress, benchPressHistory},
                 {ExerciseType.Deadlift, deadliftHistory},
                 {ExerciseType.OverheadPress, overheadPressHistory},
                 {ExerciseType.BentOverRows, bentoverrowHistory},
                 {ExerciseType.Squat, squatHistory}
+                }
             };
 
             // Ac
@@ -680,12 +692,14 @@ namespace Ianf.Fittracker.Engine.Tests
         [Fact]
         public void TestGenerateNextWorkoutOneExercise() {
             // Assembl
-            var database = new Dictionary<ExerciseType, List<Exercise>> {
+            var database = new Database {
+                ExerciseLookup = new Dictionary<ExerciseType, List<Exercise>> {
                 {ExerciseType.BenchPress, benchPressHistory},
                 {ExerciseType.Deadlift, deadliftHistorySingleExercise},
                 {ExerciseType.OverheadPress, overheadPressHistory},
                 {ExerciseType.BentOverRows, bentoverrowHistory},
                 {ExerciseType.Squat, squatHistory}
+                }
             };
 
             // Ac
@@ -698,12 +712,14 @@ namespace Ianf.Fittracker.Engine.Tests
         [Fact]
         public void TestGenerateNextWorkoutNoExercises() {
             // Assemble
-            var database = new Dictionary<ExerciseType, List<Exercise>> {
+            var database = new Database {
+                ExerciseLookup = new Dictionary<ExerciseType, List<Exercise>> {
                 {ExerciseType.BenchPress, benchPressHistory},
                 {ExerciseType.Deadlift, noExercisesList},
                 {ExerciseType.OverheadPress, overheadPressHistory},
                 {ExerciseType.BentOverRows, bentoverrowHistory},
                 {ExerciseType.Squat, squatHistory}
+                }
             };
 
             // Act
@@ -716,11 +732,13 @@ namespace Ianf.Fittracker.Engine.Tests
         [Fact]
         public void TestGenerateNextWorkoutNoEntryForExercise() {
             // Assemble
-            var database = new Dictionary<ExerciseType, List<Exercise>> {
+            var database = new Database {
+                ExerciseLookup = new Dictionary<ExerciseType, List<Exercise>> {
                 {ExerciseType.BenchPress, benchPressHistory},
                 {ExerciseType.OverheadPress, overheadPressHistory},
                 {ExerciseType.BentOverRows, bentoverrowHistory},
                 {ExerciseType.Squat, squatHistory}
+                }
             };
 
             // Act
@@ -733,12 +751,14 @@ namespace Ianf.Fittracker.Engine.Tests
         [Fact]
         public void TestGenerateNextWorkoutNullEntryForExercise() {
             // Assemble
-            var database = new Dictionary<ExerciseType, List<Exercise>> {
+            var database = new Database {
+                ExerciseLookup = new Dictionary<ExerciseType, List<Exercise>> {
                 {ExerciseType.BenchPress, benchPressHistory},
                 {ExerciseType.Deadlift, null},
                 {ExerciseType.OverheadPress, overheadPressHistory},
                 {ExerciseType.BentOverRows, bentoverrowHistory},
                 {ExerciseType.Squat, squatHistory}
+                }
             };
 
             // Act
@@ -749,9 +769,9 @@ namespace Ianf.Fittracker.Engine.Tests
         }
 
         [Fact]
-        public void TestGenerateNextWorkoutNoDatabase() {
+        public void TestGenerateNextWorkoutEmptyDatabase() {
             // Assemble
-            Dictionary<ExerciseType, List<Exercise>> database = null;
+            var database = new Database();
 
             // Act
             var result = GenerateNextWorkout(WorkoutSubType.WorkoutB, database);

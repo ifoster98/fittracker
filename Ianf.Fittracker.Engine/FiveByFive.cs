@@ -86,12 +86,12 @@ namespace Ianf.Fittracker.Engine
 
         private static WorkoutSubType GetNextWorkoutSubType(WorkoutSubType w) => w == WorkoutSubType.WorkoutA ? WorkoutSubType.WorkoutB : WorkoutSubType.WorkoutA;
 
-        public static Workout GenerateNextWorkout(WorkoutSubType wst, Dictionary<ExerciseType, List<Exercise>> exerciseList) =>
+        public static Workout GenerateNextWorkout(WorkoutSubType wst, Database database) =>
             new Workout {
                 WorkoutType = WorkoutType.FiveByFive,
                 WorkoutSubType = GetNextWorkoutSubType(wst),
                 WorkoutTime = None,
-                Exercises = GenerateExercisesForNextWorkout(GetNextWorkoutSubType(wst), exerciseList, WorkoutSubTypes[wst])
+                Exercises = GenerateExercisesForNextWorkout(GetNextWorkoutSubType(wst), database.ExerciseLookup, WorkoutSubTypes[wst])
             };
     }
 }
