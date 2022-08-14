@@ -678,11 +678,11 @@ namespace Ianf.Fittracker.Engine.Tests
         }
         
         [Fact]
-        public void TestGenerateNextWorkoutDeadliftOneExercise() {
+        public void TestGenerateNextWorkoutOneExercise() {
             // Assembl
             var database = new Dictionary<ExerciseType, List<Exercise>> {
                 {ExerciseType.BenchPress, benchPressHistory},
-                {ExerciseType.Deadlift, deadliftHistory},
+                {ExerciseType.Deadlift, deadliftHistorySingleExercise},
                 {ExerciseType.OverheadPress, overheadPressHistory},
                 {ExerciseType.BentOverRows, bentoverrowHistory},
                 {ExerciseType.Squat, squatHistory}
@@ -692,15 +692,15 @@ namespace Ianf.Fittracker.Engine.Tests
             var result = GenerateNextWorkout(WorkoutSubType.WorkoutB, database);
 
             // Assert
-            Assert.Equal(new Weight(55.0), result.Exercises.Where(e => e.ExerciseType == ExerciseType.Deadlift).First().ExerciseSet.First().Weight);
+            Assert.Equal(new Weight(50.0).GetValue(), result.Exercises.Where(e => e.ExerciseType == ExerciseType.Deadlift).First().ExerciseSet.First().Weight.GetValue());
         }
 
         [Fact]
-        public void TestGenerateNextWorkoutDeadliftNoExercises() {
+        public void TestGenerateNextWorkoutNoExercises() {
             // Assemble
             var database = new Dictionary<ExerciseType, List<Exercise>> {
                 {ExerciseType.BenchPress, benchPressHistory},
-                {ExerciseType.Deadlift, deadliftHistory},
+                {ExerciseType.Deadlift, noExercisesList},
                 {ExerciseType.OverheadPress, overheadPressHistory},
                 {ExerciseType.BentOverRows, bentoverrowHistory},
                 {ExerciseType.Squat, squatHistory}
@@ -709,8 +709,55 @@ namespace Ianf.Fittracker.Engine.Tests
             // Act
             var result = GenerateNextWorkout(WorkoutSubType.WorkoutB, database);
 
-            // Asser
-            Assert.Equal(new Weight(55.0), result.Exercises.Where(e => e.ExerciseType == ExerciseType.Deadlift).First().ExerciseSet.First().Weight);
+            // Assert
+            Assert.Equal(new Weight(0.0).GetValue(), result.Exercises.Where(e => e.ExerciseType == ExerciseType.Deadlift).First().ExerciseSet.First().Weight.GetValue());
+        }
+
+        [Fact]
+        public void TestGenerateNextWorkoutNoEntryForExercise() {
+            // Assemble
+            var database = new Dictionary<ExerciseType, List<Exercise>> {
+                {ExerciseType.BenchPress, benchPressHistory},
+                {ExerciseType.OverheadPress, overheadPressHistory},
+                {ExerciseType.BentOverRows, bentoverrowHistory},
+                {ExerciseType.Squat, squatHistory}
+            };
+
+            // Act
+            var result = GenerateNextWorkout(WorkoutSubType.WorkoutB, database);
+
+            // Assert
+            Assert.Equal(new Weight(0.0).GetValue(), result.Exercises.Where(e => e.ExerciseType == ExerciseType.Deadlift).First().ExerciseSet.First().Weight.GetValue());
+        }
+
+        [Fact]
+        public void TestGenerateNextWorkoutNullEntryForExercise() {
+            // Assemble
+            var database = new Dictionary<ExerciseType, List<Exercise>> {
+                {ExerciseType.BenchPress, benchPressHistory},
+                {ExerciseType.Deadlift, null},
+                {ExerciseType.OverheadPress, overheadPressHistory},
+                {ExerciseType.BentOverRows, bentoverrowHistory},
+                {ExerciseType.Squat, squatHistory}
+            };
+
+            // Act
+            var result = GenerateNextWorkout(WorkoutSubType.WorkoutB, database);
+
+            // Assert
+            Assert.Equal(new Weight(0.0).GetValue(), result.Exercises.Where(e => e.ExerciseType == ExerciseType.Deadlift).First().ExerciseSet.First().Weight.GetValue());
+        }
+
+        [Fact]
+        public void TestGenerateNextWorkoutNoDatabase() {
+            // Assemble
+            Dictionary<ExerciseType, List<Exercise>> database = null;
+
+            // Act
+            var result = GenerateNextWorkout(WorkoutSubType.WorkoutB, database);
+
+            // Assert
+            Assert.Equal(new Weight(0.0).GetValue(), result.Exercises.Where(e => e.ExerciseType == ExerciseType.Deadlift).First().ExerciseSet.First().Weight.GetValue());
         }
     }
 }

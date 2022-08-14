@@ -49,12 +49,12 @@ namespace Ianf.Fittracker.Engine
         };
 
         private static Weight GetLastWeight(IEnumerable<Exercise> exs) => 
-            exs.Any()
+            exs != null && exs.Any()
                 ? GetWeight(exs.Last())
                 : new Weight(0.0);
 
         private static (Outcome, Outcome) GetLastTwoOutcomes(IEnumerable<Exercise> exs) =>
-            exs.Any()
+            exs != null && exs.Any()
                 ? (
                     GetOutcome(TakeLast(exs, 2).First()), 
                     GetOutcome(TakeLast(exs, 1).First())
@@ -62,11 +62,9 @@ namespace Ianf.Fittracker.Engine
                 : (Outcome.Failure, Outcome.Failure);
 
         private static Weight GetNextWeight(ExerciseType et, Dictionary<ExerciseType, List<Exercise>> exerciseList) =>
-            CalculateNextWeight(
-                et, 
-                GetLastWeight(exerciseList[et]), 
-                GetLastTwoOutcomes(exerciseList[et])
-            );
+            exerciseList != null && exerciseList.ContainsKey(et)
+                ? CalculateNextWeight(et, GetLastWeight(exerciseList[et]), GetLastTwoOutcomes(exerciseList[et]))
+                : new Weight(0);
 
         private static List<Reps> GenerateRepsForNextWorkout(Weight w) => 
             Enumerable
