@@ -1,4 +1,3 @@
-using Ianf.Fittracker.Engine;
 using Ianf.Fittracker.Domain;
 using Xunit;
 
@@ -545,7 +544,7 @@ namespace Ianf.Fittracker.Engine.Tests
             };
 
             // Act
-            var result = sut.GenerateNextWorkout(WorkoutSubType.WorkoutA, database);
+            var result = sut.GenerateNextWorkout(WorkoutSubType.WorkoutB, database);
 
             // Assert
             Assert.Equal(new Weight(47.5), result.Exercises.Where(e => e.ExerciseType == ExerciseType.BenchPress).First().ExerciseSet.First().Weight);
@@ -577,7 +576,7 @@ namespace Ianf.Fittracker.Engine.Tests
             };
 
             // Act
-            var result = sut.GenerateNextWorkout(WorkoutSubType.WorkoutA, database);
+            var result = sut.GenerateNextWorkout(WorkoutSubType.WorkoutB, database);
 
             // Assert
             Assert.Equal(new Weight(50.0), result.Exercises.Where(e => e.ExerciseType == ExerciseType.BenchPress).First().ExerciseSet.First().Weight);
@@ -601,7 +600,7 @@ namespace Ianf.Fittracker.Engine.Tests
             };
 
             // Act
-            var result = sut.GenerateNextWorkout(WorkoutSubType.WorkoutA, database);
+            var result = sut.GenerateNextWorkout(WorkoutSubType.WorkoutB, database);
 
             // Assert
             Assert.Equal(new Weight(52.5), result.Exercises.Where(e => e.ExerciseType == ExerciseType.BenchPress).First().ExerciseSet.First().Weight);
@@ -629,7 +628,7 @@ namespace Ianf.Fittracker.Engine.Tests
             };
 
             // Act
-            var result = sut.GenerateNextWorkout(WorkoutSubType.WorkoutB, database);
+            var result = sut.GenerateNextWorkout(WorkoutSubType.WorkoutA, database);
 
             // Assert
             Assert.Equal(new Weight(45.0), result.Exercises.Where(e => e.ExerciseType == ExerciseType.Deadlift).First().ExerciseSet.First().Weight);
@@ -661,7 +660,7 @@ namespace Ianf.Fittracker.Engine.Tests
             };
 
             // Act
-            var result = sut.GenerateNextWorkout(WorkoutSubType.WorkoutB, database);
+            var result = sut.GenerateNextWorkout(WorkoutSubType.WorkoutA, database);
 
             // Assert
             Assert.Equal(new Weight(50.0), result.Exercises.Where(e => e.ExerciseType == ExerciseType.Deadlift).First().ExerciseSet.First().Weight);
@@ -685,7 +684,7 @@ namespace Ianf.Fittracker.Engine.Tests
             };
 
             // Ac
-            var result = sut.GenerateNextWorkout(WorkoutSubType.WorkoutB, database);
+            var result = sut.GenerateNextWorkout(WorkoutSubType.WorkoutA, database);
 
             // Assert
             Assert.Equal(new Weight(55.0), result.Exercises.Where(e => e.ExerciseType == ExerciseType.Deadlift).First().ExerciseSet.First().Weight);
@@ -705,7 +704,7 @@ namespace Ianf.Fittracker.Engine.Tests
             };
 
             // Ac
-            var result = sut.GenerateNextWorkout(WorkoutSubType.WorkoutB, database);
+            var result = sut.GenerateNextWorkout(WorkoutSubType.WorkoutA, database);
 
             // Assert
             Assert.Equal(new Weight(50.0).GetValue(), result.Exercises.Where(e => e.ExerciseType == ExerciseType.Deadlift).First().ExerciseSet.First().Weight.GetValue());
@@ -725,7 +724,7 @@ namespace Ianf.Fittracker.Engine.Tests
             };
 
             // Act
-            var result = sut.GenerateNextWorkout(WorkoutSubType.WorkoutB, database);
+            var result = sut.GenerateNextWorkout(WorkoutSubType.WorkoutA, database);
 
             // Assert
             Assert.Equal(new Weight(0.0).GetValue(), result.Exercises.Where(e => e.ExerciseType == ExerciseType.Deadlift).First().ExerciseSet.First().Weight.GetValue());
@@ -744,7 +743,7 @@ namespace Ianf.Fittracker.Engine.Tests
             };
 
             // Act
-            var result = sut.GenerateNextWorkout(WorkoutSubType.WorkoutB, database);
+            var result = sut.GenerateNextWorkout(WorkoutSubType.WorkoutA, database);
 
             // Assert
             Assert.Equal(new Weight(0.0).GetValue(), result.Exercises.Where(e => e.ExerciseType == ExerciseType.Deadlift).First().ExerciseSet.First().Weight.GetValue());
@@ -764,7 +763,7 @@ namespace Ianf.Fittracker.Engine.Tests
             };
 
             // Act
-            var result = sut.GenerateNextWorkout(WorkoutSubType.WorkoutB, database);
+            var result = sut.GenerateNextWorkout(WorkoutSubType.WorkoutA, database);
 
             // Assert
             Assert.Equal(new Weight(0.0).GetValue(), result.Exercises.Where(e => e.ExerciseType == ExerciseType.Deadlift).First().ExerciseSet.First().Weight.GetValue());
@@ -776,7 +775,7 @@ namespace Ianf.Fittracker.Engine.Tests
             var database = new Database();
 
             // Act
-            var result = sut.GenerateNextWorkout(WorkoutSubType.WorkoutB, database);
+            var result = sut.GenerateNextWorkout(WorkoutSubType.WorkoutA, database);
 
             // Assert
             Assert.Equal(new Weight(0.0).GetValue(), result.Exercises.Where(e => e.ExerciseType == ExerciseType.Deadlift).First().ExerciseSet.First().Weight.GetValue());

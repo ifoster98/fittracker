@@ -1,15 +1,19 @@
 using Ianf.Fittracker.Interfaces;
 using Ianf.Fittracker.Domain;
 using Ianf.Fittracker.Engine;
+using LanguageExt;
 
-namespace Ianf.Fittracker.CompilerServices
+namespace Ianf.Fittracker.Service
 {
     public class WorkoutService: IWorkoutService
     {
         private readonly IWorkoutRepository _workoutRepository;
+        private readonly IEngine _engine;
 
-        public WorkoutService(IWorkoutRepository workoutRepository) {
+        public WorkoutService(IWorkoutRepository workoutRepository,
+            IEngine engine) {
             _workoutRepository = workoutRepository;
+            _engine = engine;
         }
 
         public void SaveWorkout(Workout workout) {
@@ -20,10 +24,10 @@ namespace Ianf.Fittracker.CompilerServices
         private void SetupNextWorkout(Workout workout) 
         {
             var database = _workoutRepository.GetDatabase();
-            var newWorkout = FiveByFive.GenerateNextWorkout(workout.WorkoutSubType, database);
+            var newWorkout = _engine.GenerateNextWorkout(workout.WorkoutSubType, database);
             _workoutRepository.SetProposedWorkout(newWorkout);
         }
 
-        public Workout GetNextWorkout() => _workoutRepository.GetNextWorkout();
+        public Option<Workout> GetNextWorkout() => _workoutRepository.GetNextWorkout();
     }
 }
