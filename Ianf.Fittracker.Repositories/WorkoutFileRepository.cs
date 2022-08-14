@@ -11,17 +11,22 @@ namespace Ianf.Fittracker.Repositories
         private string dataDirectory = "data";
         private string dataFile = "fittrack.json";
 
-        public Option<Workout> GetNextWorkout()
-        {
-            var context = GetDatabase();
-            return context.ProposedWorkout;
-        }
-
         public void AddWorkout(Workout workout)
         {
-            var context = GetDatabase();
-            //context.Workouts.Add(workout);
-            //SaveDatabase(context);
+            var database = GetDatabase();
+;            //database.Workouts.Add(workout);
+            //SaveDatabase(database);
+        }
+
+        public void SetProposedWorkout(Workout workout) 
+        {
+
+        }
+
+        public Option<Workout> GetNextWorkout()
+        {
+            var database = GetDatabase();
+            return database.ProposedWorkout;
         }
 
         private Database GetDatabase() 
@@ -31,10 +36,10 @@ namespace Ianf.Fittracker.Repositories
             return JsonConvert.DeserializeObject<Database>(File.ReadAllText(storage));
         }
 
-        private void SaveDatabase(Database context) {
+        private void SaveDatabase(Database database) {
             if(!Directory.Exists(dataDirectory)) Directory.CreateDirectory(dataDirectory);
             var storage = $"{dataDirectory}/{dataFile}";
-            File.WriteAllText(storage, JsonConvert.SerializeObject(context));
+            File.WriteAllText(storage, JsonConvert.SerializeObject(database));
         }
     }
 }
