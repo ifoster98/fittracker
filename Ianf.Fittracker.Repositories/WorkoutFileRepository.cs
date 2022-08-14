@@ -1,5 +1,4 @@
 using LanguageExt;
-using static LanguageExt.Prelude;
 using Ianf.Fittracker.Domain;
 using Ianf.Fittracker.Interfaces;
 using Newtonsoft.Json;
@@ -29,7 +28,7 @@ namespace Ianf.Fittracker.Repositories
             return database.ProposedWorkout;
         }
 
-        private Database GetDatabase() 
+        public Database GetDatabase() 
         {
             var storage = $"{dataDirectory}/{dataFile}";
             if(!File.Exists(storage)) return new Database();

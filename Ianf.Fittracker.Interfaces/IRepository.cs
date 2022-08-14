@@ -9,5 +9,6 @@ namespace Ianf.Fittracker.Interfaces
         void AddWorkout(Workout workout);
         void SetProposedWorkout(Workout workout);
         Option<Workout> GetNextWorkout();
+        Database GetDatabase();
     }
 }

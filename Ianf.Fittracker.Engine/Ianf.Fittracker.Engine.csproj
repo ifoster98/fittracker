@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ianf.Fittracker.Domain\Ianf.Fittracker.Domain.csproj" />
+    <ProjectReference Include="..\Ianf.Fittracker.Interfaces\Ianf.Fittracker.Interfaces.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

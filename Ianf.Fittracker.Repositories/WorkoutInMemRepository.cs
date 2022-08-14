@@ -23,5 +23,7 @@ namespace Ianf.Fittracker.Repositories
         public void SetProposedWorkout(Workout workout) => database = database with { ProposedWorkout = workout };
 
         public Option<Workout> GetNextWorkout() => database.ProposedWorkout;
+
+        public Database GetDatabase() => database;
     }
 }
