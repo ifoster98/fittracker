@@ -1,9 +1,8 @@
 using Ianf.Fittracker.Domain;
 
-namespace Ianf.Fittracker.Interfaces
+namespace Ianf.Fittracker.Interfaces;
+
+public interface IEngine
 {
-    public interface IEngine
-    {
-        Workout GenerateNextWorkout(WorkoutSubType wst, Database database);
-    }
+    Workout GenerateNextWorkout(WorkoutSubType wst, Database database);
 }

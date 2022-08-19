@@ -1,11 +1,10 @@
 using Ianf.Fittracker.Domain;
 using LanguageExt;
 
-namespace Ianf.Fittracker.Interfaces
+namespace Ianf.Fittracker.Interfaces;
+
+public interface IWorkoutService
 {
-    public interface IWorkoutService
-    {
-        void SaveWorkout(Workout workout);
-        Option<Workout> GetNextWorkout();
-    }
+    void SaveWorkout(Workout workout);
+    Option<Workout> GetNextWorkout();
 }

@@ -1,12 +1,11 @@
-namespace Ianf.Fittracker.Domain
-{
-    public struct Weight {
-        public double weight { get; init; }
+namespace Ianf.Fittracker.Domain;
 
-        public Weight(double _weight) {
-            this.weight = _weight;
-        }
+public struct Weight {
+    public double weight { get; init; }
 
-        public double GetValue() => this.weight;
+    public Weight(double _weight) {
+        this.weight = _weight;
     }
+
+    public double GetValue() => this.weight;
 }

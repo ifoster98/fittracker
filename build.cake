@@ -4,7 +4,7 @@ using System.Threading;
 // ARGUMENTS
 ///////////////////////////////////////////////////////////////////////////////
 
-var target = Argument("target", "Test");
+var target = Argument("target", "Publish-AspNet");
 var configuration = Argument("configuration", "Release");
 var webSolution = Argument("webSolution", "./fittracker.sln");
 var artifactDirectory = Argument("artifactDirectory", "./artifacts/");
@@ -36,6 +36,16 @@ Task("Test")
        Configuration = configuration,
        NoBuild = true
     });
+});
+
+Task("Publish-AspNet")
+.IsDependentOn("Test")
+.Does(() => {
+   DotNetCorePublish(webSolution, new DotNetCorePublishSettings
+   {
+      Configuration = configuration,
+      OutputDirectory = $"{artifactDirectory}/webapi/"
+   });
 });
 
 RunTarget(target);
