@@ -3,7 +3,7 @@ using LanguageExt;
 namespace Ianf.Fittracker.Domain
 {
     public struct RepCount {
-        private int repCount;
+        public int repCount { get; init; }
 
         public RepCount(int _repCount) {
             this.repCount = _repCount;

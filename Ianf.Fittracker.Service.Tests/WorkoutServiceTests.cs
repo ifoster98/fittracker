@@ -1,7 +1,6 @@
 using Xunit;
 using Ianf.Fittracker.Repositories;
 using Ianf.Fittracker.Engine;
-using Ianf.Fittracker.Service;
 using Ianf.Fittracker.Interfaces;
 using Ianf.Fittracker.Domain;
 using LanguageExt;

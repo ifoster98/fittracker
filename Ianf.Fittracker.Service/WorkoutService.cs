@@ -1,6 +1,5 @@
 using Ianf.Fittracker.Interfaces;
 using Ianf.Fittracker.Domain;
-using Ianf.Fittracker.Engine;
 using LanguageExt;
 
 namespace Ianf.Fittracker.Service
