@@ -27,5 +27,9 @@ public class WorkoutService: IWorkoutService
         _workoutRepository.SetProposedWorkout(newWorkout);
     }
 
-    public Option<Workout> GetNextWorkout() => _workoutRepository.GetNextWorkout();
+    public Workout GetNextWorkout() =>
+        _workoutRepository.GetNextWorkout().Match(
+            Some: (s) => s,
+            None: () => _engine.DefaultWorkout()
+        );
 }

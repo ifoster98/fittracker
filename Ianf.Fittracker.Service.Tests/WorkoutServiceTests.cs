@@ -433,18 +433,9 @@ public class WorkoutServiceTests
         var result = _sut.GetNextWorkout();
 
         // Assert
-        result.Match(
-            Some: (s) => Assert.Equal(60, s.Exercises.Where(e => e.ExerciseType == ExerciseType.Squat).First().ExerciseSet.First().Weight.GetValue()),
-            None: () => Assert.False(true, "Should have received new squat exercise of 60kg.")
-        );
-        result.Match(
-            Some: (s) => Assert.Equal(45, s.Exercises.Where(e => e.ExerciseType == ExerciseType.BenchPress).First().ExerciseSet.First().Weight.GetValue()),
-            None: () => Assert.False(true, "Should have received new bench press exercise of 45kg.")
-        );
-        result.Match(
-            Some: (s) => Assert.Equal(35, s.Exercises.Where(e => e.ExerciseType == ExerciseType.BentOverRows).First().ExerciseSet.First().Weight.GetValue()),
-            None: () => Assert.False(true, "Should have received new bent over rows exercise of 35kg.")
-        );
+        Assert.Equal(60, result.Exercises.Where(e => e.ExerciseType == ExerciseType.Squat).First().ExerciseSet.First().Weight.GetValue());
+        Assert.Equal(45, result.Exercises.Where(e => e.ExerciseType == ExerciseType.BenchPress).First().ExerciseSet.First().Weight.GetValue());
+        Assert.Equal(35, result.Exercises.Where(e => e.ExerciseType == ExerciseType.BentOverRows).First().ExerciseSet.First().Weight.GetValue());
     }
 
     [Fact]
@@ -455,27 +446,15 @@ public class WorkoutServiceTests
         _sut.SaveWorkout(workout3);
         _sut.SaveWorkout(workout4);
         var result = _sut.GetNextWorkout();
-        result.Match(
-            Some: (s) => SaveResult(s),
-            None: () => Assert.True(false, "Should have received new workout of type B.")
-        );
+        SaveResult(result);
 
         // Act
         var workoutA = _sut.GetNextWorkout();
 
         // Assert
-        workoutA.Match(
-            Some: (s) => Assert.Equal(62.5, s.Exercises.Where(e => e.ExerciseType == ExerciseType.Squat).First().ExerciseSet.First().Weight.GetValue()),
-            None: () => Assert.False(true, "Should have received new squat exercise of 62.5")
-        );
-        workoutA.Match(
-            Some: (s) => Assert.Equal(30, s.Exercises.Where(e => e.ExerciseType == ExerciseType.OverheadPress).First().ExerciseSet.First().Weight.GetValue()),
-            None: () => Assert.False(true, "Should have received new bench press exercise of 30kg.")
-        );
-        workoutA.Match(
-            Some: (s) => Assert.Equal(70, s.Exercises.Where(e => e.ExerciseType == ExerciseType.Deadlift).First().ExerciseSet.First().Weight.GetValue()),
-            None: () => Assert.False(true, "Should have received new bent over rows exercise of 70kg.")
-        );
+        Assert.Equal(62.5, workoutA.Exercises.Where(e => e.ExerciseType == ExerciseType.Squat).First().ExerciseSet.First().Weight.GetValue());
+        Assert.Equal(30, workoutA.Exercises.Where(e => e.ExerciseType == ExerciseType.OverheadPress).First().ExerciseSet.First().Weight.GetValue());
+        Assert.Equal(70, workoutA.Exercises.Where(e => e.ExerciseType == ExerciseType.Deadlift).First().ExerciseSet.First().Weight.GetValue());
 
         void SaveResult(Workout result) {
             result = result with { WorkoutTime = new DateTime(2022, 08, 04) };
@@ -489,5 +468,18 @@ public class WorkoutServiceTests
                 };
             _sut.SaveWorkout(result);
         }
+    }
+
+    [Fact]
+    public void TestGetDefaultWorkout() {
+        // Assemble
+
+        // Act
+        var nextWorkout = _sut.GetNextWorkout();
+
+        // Assert
+        Assert.Equal(50.0, nextWorkout.Exercises.Where(e => e.ExerciseType == ExerciseType.Squat).First().ExerciseSet.First().Weight.GetValue());
+        Assert.Equal(40.0, nextWorkout.Exercises.Where(e => e.ExerciseType == ExerciseType.BenchPress).First().ExerciseSet.First().Weight.GetValue());
+        Assert.Equal(30.0, nextWorkout.Exercises.Where(e => e.ExerciseType == ExerciseType.BentOverRows).First().ExerciseSet.First().Weight.GetValue());
     }
 }

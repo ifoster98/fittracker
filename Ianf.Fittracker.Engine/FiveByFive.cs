@@ -96,4 +96,109 @@ public class FiveByFive : IEngine {
             Exercises = GenerateExercisesForNextWorkout(newWorkoutSubType, database.ExerciseLookup, WorkoutSubTypes[newWorkoutSubType])
         };
     }
+
+    public Workout DefaultWorkout() =>
+        new Workout {
+            WorkoutType = WorkoutType.FiveByFive,
+            WorkoutSubType = WorkoutSubType.WorkoutA,
+            WorkoutTime = None,
+            Exercises = GetDefaultExercises()
+        };
+
+    private List<Exercise> GetDefaultExercises() => 
+        new List<Exercise> {
+            new Exercise() {
+                ExerciseType = ExerciseType.Squat,
+                ExerciseTime = new DateTime(2022, 08, 01),
+                ExerciseSet = new List<Reps> {
+                    new Reps {
+                        Weight = new Weight(50.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(50.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(50.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(50.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(50.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    }
+                }
+            },
+            new Exercise() {
+                ExerciseType = ExerciseType.BenchPress,
+                ExerciseTime = new DateTime(2022, 08, 01),
+                ExerciseSet = new List<Reps> {
+                    new Reps {
+                        Weight = new Weight(40.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(40.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(40.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(40.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(40.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    }
+                }
+            },
+            new Exercise() {
+                ExerciseType = ExerciseType.BentOverRows,
+                ExerciseTime = new DateTime(2022, 08, 01),
+                ExerciseSet = new List<Reps> {
+                    new Reps {
+                        Weight = new Weight(30.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(30.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(30.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(30.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    },
+                    new Reps {
+                        Weight = new Weight(30.0),
+                        RepCount = new RepCount(5),
+                        Outcome = Outcome.Success
+                    }
+                }
+            }
+        };
 }
