@@ -14,6 +14,7 @@
     <ProjectReference Include="..\Ianf.Fittracker.Service\Ianf.Fittracker.Service.csproj" />
     <ProjectReference Include="..\Ianf.Fittracker.Interfaces\Ianf.Fittracker.Interfaces.csproj" />
     <ProjectReference Include="..\Ianf.Fittracker.Domain\Ianf.Fittracker.Domain.csproj" />
+    <ProjectReference Include="..\Ianf.Fittracker.Repositories\Ianf.Fittracker.Repositories.csproj" />
   </ItemGroup>
 
 </Project>

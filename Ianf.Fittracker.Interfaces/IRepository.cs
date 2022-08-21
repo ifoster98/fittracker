@@ -5,8 +5,8 @@ namespace Ianf.Fittracker.Interfaces;
 
 public interface IWorkoutRepository
 {
-    void AddWorkout(Workout workout);
-    void SetProposedWorkout(Workout workout);
-    Option<Workout> GetNextWorkout();
-    Database GetDatabase();
+    Either<FittrackerError, Unit> AddWorkout(Workout workout);
+    Either<FittrackerError, Unit> SetProposedWorkout(Workout workout);
+    Either<FittrackerError, Option<Workout>> GetNextWorkout();
+    Either<FittrackerError, Database> GetDatabase();
 }

@@ -7,45 +7,58 @@ namespace Ianf.Fittracker.Repositories;
 
 public class WorkoutFileRepository : IWorkoutRepository
 {
-    private string dataDirectory = "/Users/ianfoster/dev/fittracker/data/";
-    private string dataFile = "fittrack.json";
+    public string Storage { get; set; }
 
-    public void AddWorkout(Workout workout)
-    {
-        var database = GetDatabase();
-        workout.Exercises.ForEach(exercise => GetUpdatedExerciseList(database, exercise));
-        SaveDatabase(database);
+    public WorkoutFileRepository() {
+        Storage = "/Users/ianfoster/dev/fittracker/data/fittrack.json";
     }
+
+    public Either<FittrackerError, Unit> AddWorkout(Workout workout) =>
+        GetDatabase().Bind((db) =>
+        {
+            workout.Exercises.ForEach(exercise => GetUpdatedExerciseList(db, exercise));
+            return SaveDatabase(db);
+        });
 
     private void GetUpdatedExerciseList(Database database, Exercise ex)
     {
-        if(database.ExerciseLookup.ContainsKey(ex.ExerciseType)) {
-            database.ExerciseLookup[ex.ExerciseType].Add(ex);
-        } else {
-            database.ExerciseLookup[ex.ExerciseType] = new List<Exercise> { ex };
+        if (!database.ExerciseLookup.ContainsKey(ex.ExerciseType))
+            database.ExerciseLookup[ex.ExerciseType] = new List<Exercise>();
+        database.ExerciseLookup[ex.ExerciseType].Add(ex);
+    }
+
+    public Either<FittrackerError, Unit> SetProposedWorkout(Workout workout) =>
+        GetDatabase().Bind((db) => { return SaveDatabase(db with { ProposedWorkout = workout}); });
+
+    public Either<FittrackerError, Option<Workout>> GetNextWorkout() =>
+        GetDatabase().Bind((db) => { return GetNextWorkoutInternal(db); });
+
+    private Either<FittrackerError, Option<Workout>> GetNextWorkoutInternal(Database db) => db.ProposedWorkout;
+
+    public Either<FittrackerError, Database> GetDatabase()
+    {
+        if (!File.Exists(Storage)) return new Database();
+        try
+        {
+            return JsonConvert.DeserializeObject<Database>(File.ReadAllText(Storage));
+        }
+        catch (Exception ex)
+        {
+            return new FittrackerError($"Could not load database from {Storage}. {ex.Message}. {ex.StackTrace}.");
         }
     }
 
-
-    public void SetProposedWorkout(Workout workout) 
+    private Either<FittrackerError, Unit> SaveDatabase(Database database)
     {
-        var database = GetDatabase();
-        SaveDatabase(database = database with {ProposedWorkout = workout});
-    }
-
-    public Option<Workout> GetNextWorkout() => GetDatabase().ProposedWorkout;
-
-    public Database GetDatabase() 
-    {
-        var storage = $"{dataDirectory}/{dataFile}";
-        if(!File.Exists(storage)) return new Database();
-        return JsonConvert.DeserializeObject<Database>(File.ReadAllText(storage));
-    }
-
-    private void SaveDatabase(Database database) {
-        if(!Directory.Exists(dataDirectory)) Directory.CreateDirectory(dataDirectory);
-        var storage = $"{dataDirectory}/{dataFile}";
-        var foo = JsonConvert.SerializeObject(database);
-        File.WriteAllText(storage, JsonConvert.SerializeObject(database));
+        try
+        {
+            if (!File.Exists(Storage)) File.Create(Storage);
+            File.WriteAllText(Storage, JsonConvert.SerializeObject(database));
+            return new Unit();
+        }
+        catch (Exception ex)
+        {
+            return new FittrackerError($"Unable to save database to ${Storage}. {ex.Message}. {ex.StackTrace}.");
+        }
     }
 }

@@ -18,11 +18,7 @@ public class WorkoutController : ControllerBase
     }
 
     [HttpGet(Name = "GetNextWorkout")]
-    public Workout GetNextWorkout() =>
-        _workoutService.GetNextWorkout().Match(
-            Some: (s) => s,
-            None: () => new Workout()
-        );
+    public Workout GetNextWorkout() => _workoutService.GetNextWorkout();
 
     [HttpPost(Name = "SaveWorkout")]
     public void SaveWorkout(Workout workout) => _workoutService.SaveWorkout(workout);

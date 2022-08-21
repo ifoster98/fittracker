@@ -8,9 +8,6 @@ public class WorkoutInMemRepository : IWorkoutRepository
 {
     private Database database = new Database();
 
-    public void AddWorkout(Workout workout) => 
-        workout.Exercises.ForEach(GetUpdatedExerciseList);
-
     private void GetUpdatedExerciseList(Exercise ex)
     {
         if(database.ExerciseLookup.ContainsKey(ex.ExerciseType)) {
@@ -20,9 +17,19 @@ public class WorkoutInMemRepository : IWorkoutRepository
         }
     }
 
-    public void SetProposedWorkout(Workout workout) => database = database with { ProposedWorkout = workout };
+    public Either<FittrackerError, Unit> AddWorkout(Workout workout)
+    {
+        workout.Exercises.ForEach(GetUpdatedExerciseList);
+        return new Unit();
+    }
 
-    public Option<Workout> GetNextWorkout() => database.ProposedWorkout;
+    public Either<FittrackerError, Unit> SetProposedWorkout(Workout workout)
+    {
+        database = database with { ProposedWorkout = workout };
+        return new Unit();
+    }
 
-    public Database GetDatabase() => database;
+    public Either<FittrackerError, Option<Workout>> GetNextWorkout() => database.ProposedWorkout;
+
+    public Either<FittrackerError, Database> GetDatabase() => database;
 }

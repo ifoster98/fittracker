@@ -1,5 +1,7 @@
 using Ianf.Fittracker.Interfaces;
 using Ianf.Fittracker.Service;
+using Ianf.Fittracker.Repositories;
+using Ianf.Fittracker.Engine;
 
 internal class Program
 {
@@ -9,6 +11,8 @@ internal class Program
 
         // Add services to the container.
         builder.Services.AddScoped<IWorkoutService, WorkoutService>();
+        builder.Services.AddScoped<IWorkoutRepository, WorkoutFileRepository>();
+        builder.Services.AddScoped<IEngine, FiveByFive>();
         builder.Services.AddControllers();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -22,6 +26,10 @@ internal class Program
         {
             app.UseSwagger();
             app.UseSwaggerUI();
+        } 
+        else 
+        {
+            app.UseHttpsRedirection();
         }
 
         app.UseHttpsRedirection();
