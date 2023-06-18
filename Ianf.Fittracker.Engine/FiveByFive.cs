@@ -75,7 +75,7 @@ public class FiveByFive : IEngine {
     private Exercise GetNextExercise(ExerciseType et, Dictionary<ExerciseType, List<Exercise>> exerciseList) {
         var nextWeight = GetNextWeight(et, exerciseList);
         var reps = GenerateRepsForNextWorkout(nextWeight);
-        return new Exercise{ExerciseType = et, ExerciseTime = None, ExerciseSet = reps};
+        return new Exercise{ExerciseType = et, ExerciseTime = DateTime.MinValue, ExerciseSet = reps};
     }
 
     private List<Exercise> GenerateExercisesForNextWorkout(WorkoutSubType wst, 
@@ -92,7 +92,7 @@ public class FiveByFive : IEngine {
         return new Workout {
             WorkoutType = WorkoutType.FiveByFive,
             WorkoutSubType = newWorkoutSubType,
-            WorkoutTime = None,
+            WorkoutTime = DateTime.Now,
             Exercises = GenerateExercisesForNextWorkout(newWorkoutSubType, database.ExerciseLookup, WorkoutSubTypes[newWorkoutSubType])
         };
     }
@@ -101,7 +101,7 @@ public class FiveByFive : IEngine {
         new Workout {
             WorkoutType = WorkoutType.FiveByFive,
             WorkoutSubType = WorkoutSubType.WorkoutA,
-            WorkoutTime = None,
+            WorkoutTime = DateTime.Now,
             Exercises = GetDefaultExercises()
         };
 

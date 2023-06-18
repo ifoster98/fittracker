@@ -1,0 +1,160 @@
+{
+  "WorkoutType": 0,
+  "WorkoutSubType": 1,
+  "WorkoutTime": "2022-08-04T00:00:00",
+  "Exercises": [
+    {
+      "ExerciseType": 0,
+      "ExerciseTime": "2022-08-04T00:00:00",
+      "ExerciseSet": [
+        {
+          "Weight": {
+            "weight": 57.5
+          },
+          "RepCount": {
+            "repCount": 5
+          },
+          "Outcome": 1
+        },
+        {
+          "Weight": {
+            "weight": 57.5
+          },
+          "RepCount": {
+            "repCount": 5
+          },
+          "Outcome": 1
+        },
+        {
+          "Weight": {
+            "weight": 57.5
+          },
+          "RepCount": {
+            "repCount": 5
+          },
+          "Outcome": 1
+        },
+        {
+          "Weight": {
+            "weight": 57.5
+          },
+          "RepCount": {
+            "repCount": 5
+          },
+          "Outcome": 1
+        },
+        {
+          "Weight": {
+            "weight": 57.5
+          },
+          "RepCount": {
+            "repCount": 5
+          },
+          "Outcome": 1
+        }
+      ]
+    },
+    {
+      "ExerciseType": 3,
+      "ExerciseTime": "2022-08-04T00:00:00",
+      "ExerciseSet": [
+        {
+          "Weight": {
+            "weight": 27.5
+          },
+          "RepCount": {
+            "repCount": 5
+          },
+          "Outcome": 1
+        },
+        {
+          "Weight": {
+            "weight": 27.5
+          },
+          "RepCount": {
+            "repCount": 5
+          },
+          "Outcome": 1
+        },
+        {
+          "Weight": {
+            "weight": 27.5
+          },
+          "RepCount": {
+            "repCount": 5
+          },
+          "Outcome": 1
+        },
+        {
+          "Weight": {
+            "weight": 27.5
+          },
+          "RepCount": {
+            "repCount": 5
+          },
+          "Outcome": 1
+        },
+        {
+          "Weight": {
+            "weight": 27.5
+          },
+          "RepCount": {
+            "repCount": 5
+          },
+          "Outcome": 1
+        }
+      ]
+    },
+    {
+      "ExerciseType": 2,
+      "ExerciseTime": "2022-08-04T00:00:00",
+      "ExerciseSet": [
+        {
+          "Weight": {
+            "weight": 65
+          },
+          "RepCount": {
+            "repCount": 5
+          },
+          "Outcome": 1
+        },
+        {
+          "Weight": {
+            "weight": 65
+          },
+          "RepCount": {
+            "repCount": 5
+          },
+          "Outcome": 1
+        },
+        {
+          "Weight": {
+            "weight": 65
+          },
+          "RepCount": {
+            "repCount": 5
+          },
+          "Outcome": 1
+        },
+        {
+          "Weight": {
+            "weight": 65
+          },
+          "RepCount": {
+            "repCount": 5
+          },
+          "Outcome": 1
+        },
+        {
+          "Weight": {
+            "weight": 65
+          },
+          "RepCount": {
+            "repCount": 5
+          },
+          "Outcome": 1
+        }
+      ]
+    }
+  ]
+}

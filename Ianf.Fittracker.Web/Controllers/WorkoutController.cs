@@ -17,9 +17,9 @@ public class WorkoutController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet(Name = "GetNextWorkout")]
+    [HttpGet]
     public Workout GetNextWorkout() => _workoutService.GetNextWorkout();
 
-    [HttpPost(Name = "SaveWorkout")]
+    [HttpPost]
     public void SaveWorkout(Workout workout) => _workoutService.SaveWorkout(workout);
 }

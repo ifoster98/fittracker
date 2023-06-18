@@ -7,6 +7,6 @@ public record struct Workout {
     public Workout() {}
     public WorkoutType WorkoutType { get; init; } = WorkoutType.FiveByFive;
     public WorkoutSubType WorkoutSubType { get; init; } = WorkoutSubType.WorkoutA;
-    public Option<DateTime> WorkoutTime { get; init; } = None;
+    public DateTime WorkoutTime { get; init; } = DateTime.MinValue;
     public List<Exercise> Exercises { get; init; } = new List<Exercise>();
 }

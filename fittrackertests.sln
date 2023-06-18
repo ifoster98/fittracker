@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ianf.Fittracker.Web", "Ianf.Fittracker.Web\Ianf.Fittracker.Web.csproj", "{53B031E1-8FCD-4A55-9627-6B62B7E6B537}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ianf.Fittracker.Web.Tests", "Ianf.Fittracker.Web.Tests\Ianf.Fittracker.Web.Tests.csproj", "{D73B7A3C-5ED8-4565-81FA-0C698BECFA19}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53B031E1-8FCD-4A55-9627-6B62B7E6B537}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53B031E1-8FCD-4A55-9627-6B62B7E6B537}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53B031E1-8FCD-4A55-9627-6B62B7E6B537}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53B031E1-8FCD-4A55-9627-6B62B7E6B537}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D73B7A3C-5ED8-4565-81FA-0C698BECFA19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D73B7A3C-5ED8-4565-81FA-0C698BECFA19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D73B7A3C-5ED8-4565-81FA-0C698BECFA19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D73B7A3C-5ED8-4565-81FA-0C698BECFA19}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

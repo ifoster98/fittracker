@@ -1,5 +1,3 @@
-using LanguageExt;
-
 namespace Ianf.Fittracker.Domain
 {
     public struct RepCount {

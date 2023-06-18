@@ -24,13 +24,13 @@ public class WorkoutService: IWorkoutService
 
     private Workout EnsureDatesAreSet(Workout workout)
     {
-        if(workout.WorkoutTime.IsNone) workout = workout with {WorkoutTime = DateTime.Now };
+        if(workout.WorkoutTime == DateTime.MinValue) workout = workout with {WorkoutTime = DateTime.Now };
         workout = workout with { Exercises = workout.Exercises.Select(ex => UpdateDatesForExercises(ex)).ToList() };
         return workout;
     }
 
     private Exercise UpdateDatesForExercises(Exercise ex) {
-        if(ex.ExerciseTime.IsNone) ex = ex with {ExerciseTime = DateTime.Now};
+        if(ex.ExerciseTime == DateTime.MinValue) ex = ex with {ExerciseTime = DateTime.Now};
         return ex;
     } 
 
